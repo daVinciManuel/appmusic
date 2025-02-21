@@ -1,0 +1,4 @@
+select:focus option:first-child{
+display: none;
+}
+
