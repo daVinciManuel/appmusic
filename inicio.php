@@ -1,1 +1,1 @@
-<?php require "./controllers/inicio.php";
+<?php require "./controllers/cinicio.php";

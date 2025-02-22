@@ -1,3 +1,6 @@
 <?php
-var_dump($_SESSION);
 include "./controllers/login/checkLogin.php";
+
+
+
+require_once "./view/vinicio.php";
