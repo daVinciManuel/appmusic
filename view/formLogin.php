@@ -12,7 +12,7 @@
 
     <div class="container ">
         <!--Aplicacion-->
-		<div class="card border-success mb-3" style="max-width: 30rem;">
+		<div class="card border-info mb-3" style="max-width: 30rem;">
 		<div class="card-header">Login Usuario</div>
 		<div class="card-body">
 		
