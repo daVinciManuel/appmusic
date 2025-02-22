@@ -2,7 +2,7 @@
 function getUserInfo($email) {
   $conn = connect();
     try {
-        $sql = "SELECT CustomerId,FirstName,LastName,Email FROM Customer WHERE Email = :email";
+        $sql = "SELECT ".DATABASE_TABLE_USER_QUERY_COLUMNS." FROM ".DATABASE_TABLE_USER." WHERE Email = :email";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':email', $email);
         $stmt->execute();
