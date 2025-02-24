@@ -22,4 +22,4 @@ define('LOGIN_BAN_DURATION',0.5);
 // tabla que guarda los usuarios en la base de datos
 define('DATABASE_TABLE_USER','Customer');
 // columnas que se van a extraer de la tabla usuario para guardar en la sesion
-define('DATABASE_TABLE_USER_QUERY_COLUMNS','CustomerId,FirstName,LastName,Email');
+define('DATABASE_TABLE_USER_QUERY_COLUMNS','CustomerId,FirstName,LastName,Email,Address,City,State,PostalCode');

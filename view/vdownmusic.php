@@ -21,7 +21,8 @@
             <?php echo $optionsList ?>
           </select>
         </div>
-		<input type="submit" name="submit" value="Agregar al carrito" class="btn btn-dark disabled">
+		<input type="submit" name="addToCart" value="Agregar al carrito" class="btn btn-info disabled">
+		<input type="submit" name="download" value="Finalizar Compra" class="btn btn-info disabled">
       </form>
       </div>
     </main>
