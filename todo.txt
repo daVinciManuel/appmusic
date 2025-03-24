@@ -1,5 +1,8 @@
 LOGIN:
-  - error al sumar intentos fallidos.
-  - error al autenticar.
+  + error al sumar intentos fallidos.
+  + error al autenticar.
   - falta crear tabla bd encriptada.
 
+DOWNMUSIC:
+  - carrito visible
+  - eliminar items seleccionados

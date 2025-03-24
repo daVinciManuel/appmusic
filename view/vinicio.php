@@ -10,7 +10,7 @@
       <a class="btn btn-danger" href="./controllers/login/logout.php">Logout</a>
     </header>
     <main>
-<h1>WELCOME <?php echo $_SESSION['user']['FirstName'] . " " . $_SESSION['user']['LastName'];?></h1>
+<h1>WELCOME <?php echo $_SESSION['user'];?></h1>
       <menu>
         <li><a href="./downmusic.php">Descargar Musica</a></li>
         <li><a href="./histfacturas.php">Historial de Facturas</a></li>

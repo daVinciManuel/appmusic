@@ -6,8 +6,8 @@ function getUserPass($email) {
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':email', $email);
         $stmt->execute();
-        $stmt->fetchColumn();
-        return $stmt;
+        $result = $stmt->fetchColumn();
+        return $result;
     } catch(PDOException $e) {
         echo "Error extracting user data: " . $e->getMessage();
         return null;

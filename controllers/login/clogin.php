@@ -1,18 +1,12 @@
 <?php
-// si existe la cookie de usuario se lleva a la pagina de inicio
+// si existe la cookie de usuario redirige a la pagina de inicio
 if (isset($_COOKIE['user'])) {
     header("Location: ./inicio.php");
-    // exit();
+    exit();
 }
 // si esta baneado se redirige a una pagina vacia
-if(isset($_COOKIE['ban'])){
+if(isset($_COOKIE['loginAttempts']) && $_COOKIE['loginAttempts'] >= 3 - 1){
     header("Location: about:blank");
-}
-// si ha superado el limite de intentos se banea por 5min al usuario y se redirige a una pagina vacia
-if(isset($_COOKIE['loginAttempts']) && $_COOKIE['loginAttempts'] == 3){
-  // ban por 5 minutos
-  setcookie('ban','',time() + 60 * 5,'/');
-  header("Location: about:blank");
 }
 function errorHandler($errno, $errstr, $errfile, $errline) {
     echo "<b> Error:</b> [$errno] $errstr<br>";
@@ -29,12 +23,22 @@ if(isset($_POST['email']) && isset($_POST['password'])){
     $errorMsg .= 'Email or Password cannot be empty';
     trigger_error($errorMsg, E_USER_WARNING);
 
+    // ----------------------- COOKIES INTENTOS FALLIDOS -----------------------
     // crea la cookie de intentos fallidos si no existe
     if(!isset($_COOKIE['loginAttempts'])){
-      setcookie('loginAttempts',serialize(0),time() + 3600 * 2,'/');
+      setcookie('loginAttempts',1,time() + 3600 * 2,'/');
+    }else{
+      $attempts = $_COOKIE['loginAttempts'];
+      // limite de intentos 3
+      if($attempts < 3){
+      // suma un intento fallido 
+        $attempts+=1;
+      setcookie('loginAttempts',$attempts,time() + 60*5,'/');
+      // ban por 5 minutos
+      }else {
+        header("Location: about:blank");
+      }
     }
-    // suma un intento fallido 
-    $_COOKIE['loginAttempts'] = serialize(1 + unserialize($_COOKIE['loginAttempts']));
   }else {
     include_once "./db/connect.php";
     include_once "./models/mlogin.php";
@@ -45,12 +49,22 @@ if(isset($_POST['email']) && isset($_POST['password'])){
       $errorMsg .= 'This account does not exist';
       trigger_error($errorMsg, E_USER_WARNING);
 
+      // ----------------------- COOKIES INTENTOS FALLIDOS -----------------------
       // crea la cookie de intentos fallidos si no existe
       if(!isset($_COOKIE['loginAttempts'])){
-        setcookie('loginAttempts',serialize(0),time() + 3600 * 2,'/');
+        setcookie('loginAttempts',1,time() + 3600 * 2,'/');
+      }else{
+        // limite de intentos 3
+        $attempts = $_COOKIE['loginAttempts'];
+        if($attempts < 3){
+        // suma un intento fallido 
+          $attempts+=1;
+          setcookie('loginAttempts',$attempts,time() + 60*5,'/');
+          // ban por 5 minutos
+        }else {
+        header("Location: about:blank");
+        }
       }
-      // suma un intento fallido 
-      $_COOKIE['loginAttempts'] = serialize(1 + unserialize($_COOKIE['loginAttempts']));
     }else{
       // ----------------------------------- AUTENTICACION ---------------------------
       $dbPassword = getUserPass($formUser);
@@ -58,21 +72,31 @@ if(isset($_POST['email']) && isset($_POST['password'])){
       if($formPassword != $dbPassword){
         // muestra el error 
         $errorMsg .= 'Wrong Email or Password';
-        trigger_error($errorMsg,E_USER_ERROR);
+        trigger_error($errorMsg,E_USER_WARNING);
 
+        // ----------------------- COOKIES INTENTOS FALLIDOS -----------------------
         // crea la cookie de intentos fallidos si no existe
         if(!isset($_COOKIE['loginAttempts'])){
-          setcookie('loginAttempts',serialize(0),time() + 3600 * 2,'/');
+          setcookie('loginAttempts',1,time() + 3600 * 2,'/');
+        }else{
+          // limite de intentos 3
+          $attempts = $_COOKIE['loginAttempts'];
+          if($attempts < 3){
+          // suma un intento fallido 
+            $attempts+=1;
+            setcookie('loginAttempts',$attempts,time() + 60*5,'/');
+            // ban por 5 minutos
+          }else {
+          header("Location: about:blank");
+          }
         }
-        // suma un intento fallido 
-        $_COOKIE['loginAttempts'] = serialize(1 + unserialize($_COOKIE['loginAttempts']));
-
       }else{
         // -------------------------- LOGIN OK ----------------------------------------
-      session_unset();
+        setcookie('loginAttempts',$_COOKIE['loginAttempts'] + 1,time() - 9999,'/');
+        session_start();
         $_SESSION['user'] = $user;
         header('Location: ./inicio.php');
-        // exit();
+        exit();
       }
     }
   }
