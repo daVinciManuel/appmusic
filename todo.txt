@@ -6,3 +6,5 @@ LOGIN:
 DOWNMUSIC:
   - carrito visible
   - eliminar items seleccionados
+  - pasarela de pago
+  - inserts a db
