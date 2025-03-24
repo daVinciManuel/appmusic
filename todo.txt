@@ -1,0 +1,5 @@
+LOGIN:
+  - error al sumar intentos fallidos.
+  - error al autenticar.
+  - falta crear tabla bd encriptada.
+
