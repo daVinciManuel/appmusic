@@ -1,5 +1,5 @@
 <?php
-include "./controllers/login/checkLogin.php";
+require_once "./controllers/login/checkLogin.php";
 
 var_dump($_SESSION);
 

@@ -9,3 +9,20 @@ function getAllTracks(){
   return $rawResult;
     $conn = null;
 }
+function getTrackName($id) {
+  $conn = connect();
+    try {
+        $sql = "SELECT Name,UnitPrice,TrackId FROM Track WHERE TrackId = :trackId";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':trackId', $id);
+        $stmt->execute();
+        $info = $stmt->fetch(PDO::FETCH_ASSOC);
+    // si el email existe devuelve el nombre completo
+    // si el email no existe devuelve NULL;
+        return $info ?? null;
+    } catch(PDOException $e) {
+        echo "Error extracting user data: " . $e->getMessage();
+        return null;
+    }
+  $conn = null;
+}

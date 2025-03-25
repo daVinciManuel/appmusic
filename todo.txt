@@ -4,7 +4,7 @@ LOGIN:
   - falta crear tabla bd encriptada.
 
 DOWNMUSIC:
-  - carrito visible
-  - eliminar items seleccionados
+  + carrito visible
+  + eliminar items seleccionados del carrito
   - pasarela de pago
   - inserts a db

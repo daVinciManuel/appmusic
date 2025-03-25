@@ -10,7 +10,7 @@ if(isset($_COOKIE['loginAttempts']) && $_COOKIE['loginAttempts'] >= 3 - 1){
 }
 function errorHandler($errno, $errstr, $errfile, $errline) {
     echo "<b> Error:</b> [$errno] $errstr<br>";
-    echo " Error on line $errline in $errfile<br>";
+    // echo " Error on line $errline in $errfile<br>";
 }
 set_error_handler("errorHandler");
 if(isset($_POST['email']) && isset($_POST['password'])){
