@@ -9,7 +9,7 @@ function getAllTracks(){
   return $rawResult;
     $conn = null;
 }
-function getTrackName($id) {
+function getTrackInfo($id) {
   $conn = connect();
     try {
         $sql = "SELECT Name,UnitPrice,TrackId FROM Track WHERE TrackId = :trackId";
@@ -20,6 +20,23 @@ function getTrackName($id) {
     // si el email existe devuelve el nombre completo
     // si el email no existe devuelve NULL;
         return $info ?? null;
+    } catch(PDOException $e) {
+        echo "Error extracting user data: " . $e->getMessage();
+        return null;
+    }
+  $conn = null;
+}
+function getTrackPrice($id) {
+  $conn = connect();
+    try {
+        $sql = "SELECT UnitPrice FROM Track WHERE TrackId = :trackId";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':trackId', $id);
+        $stmt->execute();
+        $price = $stmt->fetchColumn();
+    // si el email existe devuelve el nombre completo
+    // si el email no existe devuelve NULL;
+        return $price ?? null;
     } catch(PDOException $e) {
         echo "Error extracting user data: " . $e->getMessage();
         return null;

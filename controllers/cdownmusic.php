@@ -5,6 +5,7 @@ require "./models/queriesTracks.php";
 echo "\$_SESSION[user]:";
 var_dump($_SESSION['user']);
 echo "<br>";
+
 // ------------------ SELECT > OPTIONS Tracks ----------------
   $vehiculos = getAllTracks();
 
@@ -34,25 +35,36 @@ if(isset($_POST['removeFromCart'])){
     }
   }
 }
+
+
 // ACCION COMPRAR ------------------------------------------------------------
+$total = 0;
+$dialog = '';
 if(isset($_POST['download'])){
 	if (count($_SESSION['carrito']) > 0) {
-    
+    $dialog = 'open';
+    foreach($_SESSION['carrito'] as $trackId){
+      $total += getTrackPrice($trackId);
+    }
   }
   // VACIA EL CARRITO DESPUES DE HACER LA COMPRA
-  $_SESSION['carrito'] = array();
+  // $_SESSION['carrito'] = array();
 }
+
+
+
+
+
 
 // carrito para la vista
 if(isset($_SESSION['carrito'])){
   // array con los nombres y precios de las canciones del carrito
   $carritoView = array();
-  foreach($_SESSION['carrito'] as $c){
-    $carritoView[] = getTrackName($c);
+  foreach($_SESSION['carrito'] as $trackId){
+    $carritoView[] = getTrackInfo($trackId);
   }
 }
-$optionsList = '';
-foreach($vehiculos as $v){
-    $optionsList .= '<option value="' . $v['TrackId'] .'">'.$v['Name'] . ' - ' . $v['UnitPrice'] . '€' .'</option>';
-}
+echo "\$_SESSION[carrito]:";
+var_dump($_SESSION['carrito']);
+echo "<br>";
 require "./view/vdownmusic.php";

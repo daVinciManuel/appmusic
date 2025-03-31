@@ -5,8 +5,37 @@
     <title>Home - MUSICAL</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/extra.css">
+    <style>
+    dialog{
+      border: 2px solid red;
+      border-radius: 5px;
+      background-color: white;
+      z-index: 999999999999999999999;
+      padding: 50px;
+    }
+    dialog p{
+      margin: 0;
+      padding: 0;
+    }
+    /* precio */
+    dialog p span{
+      font-weight: bold;
+    }
+    dialog button:hover, dialog button:focus{
+      background-color: black;
+      color: #fafafa;
+    }
+    </style>
   </head>
   <body class="bg-dark">
+    <!-- confirmacion para comprar  -->
+    <dialog <?php echo $dialog; ?>>
+      <p>Total: <span><?php echo $total;?></span></p>
+      <p>Desea realizar la compra?</p>
+      <form method='dialog'>
+      <button> Comprar</button>
+      </form>
+    </dialog>
     <header>
       <a class="btn btn-danger" href="./controllers/login/logout.php">Logout</a>
     </header>
@@ -17,7 +46,14 @@
         <div class="form-group">
           Cancion
           <select name="track" class="">
-            <option disabled selected></option>
+            <option disabled selected>Selecciona una pista</option>
+              <?php
+              // LISTADO DE PISTAS 
+              $optionsList = '';
+              foreach($vehiculos as $v){
+                  $optionsList .= '<option value="' . $v['TrackId'] .'">'.$v['Name'] . ' - ' . $v['UnitPrice'] . '€' .'</option>';
+              }
+              ?>
             <?php echo $optionsList ?>
           </select>
         </div>
@@ -36,12 +72,14 @@
         </thead>
         <tbody>
       <?php foreach($carritoView as $c){ ?>
+        <?php if($c){ ?>
+
           <tr>
             <td><?php echo $c['Name']; ?></td>
             <td><?php echo $c['UnitPrice']; ?></td>
             <td><input type="checkbox" name="tracksToRemove[]" value="<?php echo $c['TrackId'];?>"></td>
           </tr>
-      <?php } ?>
+      <?php }} ?>
             <tr>
               <td></td>
               <td></td>
