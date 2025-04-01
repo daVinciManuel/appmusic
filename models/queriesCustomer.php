@@ -2,7 +2,7 @@
 function getUserData($CustomerId) {
   $conn = connect();
     try {
-        $sql = "SELECT BillingAddress,BillingCity,BillingState,BillingCountry,BillingPostalCode FROM Customer WHERE CustomerId = :CustomerId";
+        $sql = "SELECT Address,City,State,Country,PostalCode FROM Customer WHERE CustomerId = :CustomerId";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':CustomerId', $CustomerId);
         $stmt->execute();

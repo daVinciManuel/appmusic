@@ -2,7 +2,7 @@
 function getUserId($email) {
   $conn = connect();
     try {
-        $sql = "SELECT CustomerId ROM Customer WHERE Email = :email";
+        $sql = "SELECT CustomerId FROM Customer WHERE Email = :email";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':email', $email);
         $stmt->execute();

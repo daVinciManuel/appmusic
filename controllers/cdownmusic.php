@@ -40,21 +40,26 @@ if(isset($_POST['removeFromCart'])){
 // ACCION COMPRAR ------------------------------------------------------------
 $total = 0;
 $dialog = '';
+$insertDone = false;
 if(isset($_POST['download'])){
 	if (count($_SESSION['carrito']) > 0) {
+    // $insertDone = storeInvoice();
     $dialog = 'open';
     foreach($_SESSION['carrito'] as $trackId){
       $total += getTrackPrice($trackId);
     }
 
 	include './controllers/API_PHP/redsysHMAC256_API_PHP_7.0.0/apiRedsys.php';
-  include './models/queriesInvoice.php';
+  include_once './models/queriesInvoice.php';
 	$miObj = new RedsysAPI;
 		
 	$url="http://sis-t.redsys.es:25443/sis/realizarPago";
-  $urlOKKO="http://192.168.206.130/apps/appmusic/downmusic.php";
+  // $urlOKKO="http://192.168.206.130/apps/appmusic/pruebaRedsys.php";
+  $urlOK="http://localhost/apps/appmusic/inicio.php";
+  $urlKO="http://localhost/apps/appmusic/paymentfailed.php";
   // numero de pedido
-	$id=sprintf("%012d", (string)getInvoiceId());
+	// $id=sprintf("%012d", (string)getInvoiceId());
+  $id = rand(10000,99999);
   // total a pagar
 	$amount=floatval($total)*100;
   $card = 'C';
@@ -66,8 +71,8 @@ if(isset($_POST['download'])){
 	$miObj->setParameter("DS_MERCHANT_TRANSACTIONTYPE",'0');
 	$miObj->setParameter("DS_MERCHANT_TERMINAL",'13');
 	$miObj->setParameter("DS_MERCHANT_MERCHANTURL",$url);
-	$miObj->setParameter("DS_MERCHANT_URLOK",$urlOKKO);
-	$miObj->setParameter("DS_MERCHANT_URLKO",$urlOKKO);
+	$miObj->setParameter("DS_MERCHANT_URLOK",$urlOK);
+	$miObj->setParameter("DS_MERCHANT_URLKO",$urlKO);
 	$miObj->setParameter("DS_MERCHANT_PAYMENTMETHOD",$card);
 
 	//Datos de configuración
@@ -79,71 +84,6 @@ if(isset($_POST['download'])){
   }
   // VACIA EL CARRITO DESPUES DE HACER LA COMPRA
   // $_SESSION['carrito'] = array();
-}
-
-// -------------------- PROCESAR RESPUESTA DE REDSYS ------------------------------------------------------------
-
-  if (!empty( $_POST ) && isset($_POST['Ds_SignatureVersion']) && isset($_POST["Ds_MerchantParameters"]) && isset($_POST["Ds_Signature"]) ) {//URL DE RESP. ONLINE
-    include './controllers/API_PHP/redsysHMAC256_API_PHP_7.0.0/apiRedsys.php';
-					
-					$version = $_POST["Ds_SignatureVersion"];
-					$datos = $_POST["Ds_MerchantParameters"];
-					$signatureRecibida = $_POST["Ds_Signature"];
-					
-
-  $miObj = new RedsysAPI;
-					$decodec = $miObj->decodeMerchantParameters($datos);	
-					$kc = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'; //Clave recuperada de CANALES
-					$firma = $miObj->createMerchantSignatureNotif($kc,$datos);	
-
-					// echo PHP_VERSION."<br/>";
-					// echo $firma."<br/>";
-					// echo $signatureRecibida."<br/>";
-					if ($firma === $signatureRecibida){
-            // echo "FIRMA OK";
-            // echo "<h2>PAYMENT WENT OK</h2>";
-            storeInvoice();
-					} else {
-						echo "FIRMA KO";
-					}
-	}
-	else{
-    if (!empty( $_GET ) && isset($_GET['Ds_SignatureVersion']) && isset($_GET["Ds_MerchantParameters"]) && isset($_GET["Ds_Signature"]) ) {//URL DE RESP. ONLINE
-      include './controllers/API_PHP/redsysHMAC256_API_PHP_7.0.0/apiRedsys.php';
-			$version = $_GET["Ds_SignatureVersion"];
-			$datos = $_GET["Ds_MerchantParameters"];
-			$signatureRecibida = $_GET["Ds_Signature"];
-				
-		
-	$miObj = new RedsysAPI;
-			$decodec = $miObj->decodeMerchantParameters($datos);
-			$kc = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'; //Clave recuperada de CANALES
-			$firma = $miObj->createMerchantSignatureNotif($kc,$datos);
-		
-			if ($firma === $signatureRecibida){
-        // echo "<h2>PAYMENT WENT OK</h2>";
-				// echo "FIRMA OK";
-        storeInvoice();
-			} else {
-				echo "FIRMA KO";
-
-			}
-		}
-		else{
-			// die("No se recibió respuesta");
-		}
-	}
-
-// ------------- INSERTS DE FACTURAS ------------------------------------------
-function storeInvoice(){
-  $user = getUserData($_SESSION['userId']);
-  $invoiceId = getInvoiceId();
-  $total = 0;
-  foreach($_SESSION['carrito'] as $trackId){
-    $total += getTrackPrice($trackId);
-    insertInvoiceLine(getInvoiceLineId(),$invoiceId,$trackId,$getTrackPrice($trackId));
-  }
-  insertInvoice($invoiceId,$_SESSION['userId'],date('Y-m-d H:i:s') , $user['BillingAddress'],$user['BillingCity'],$user['BillingState'],$user['BillingCountry'],$user['BillingPostalCode'],$total);
 }
 
 

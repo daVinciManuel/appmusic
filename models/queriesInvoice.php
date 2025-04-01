@@ -16,9 +16,8 @@ function getInvoiceId() {
 function getInvoiceLineId() {
   $conn = connect();
     try {
-        $sql = "SELECT InvoiceLineId FROM InvoiceLine ORDER BY InvoiceId DESC LIMIT 1";
+        $sql = "SELECT InvoiceLineId FROM InvoiceLine ORDER BY InvoiceLineId DESC LIMIT 1";
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':trackId', $id);
         $stmt->execute();
         $id = $stmt->fetchColumn();
         return $id+1 ?? null;

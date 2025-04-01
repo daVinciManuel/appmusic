@@ -25,7 +25,7 @@ function insertInvoice($InvoiceId, $CustomerId, $InvoiceDate, $BillingAddress, $
         die($e->getMessage());
     }
     $conn = null;
-    // return $insertDone;
+    return $insertDone;
 }
  
  
@@ -37,15 +37,16 @@ function insertInvoiceLine($InvoiceLineId, $InvoiceId, $TrackId, $UnitPrice)
     $insertDone = false;
     $conn = connect();
     try {
+    $Quantity = 1;
         $conn->beginTransaction();
-        $query = "INSERT INTO Invoice(InvoiceLineId, InvoiceId, TrackId, UnitPrice, Quantity)
+        $query = "INSERT INTO InvoiceLine(InvoiceLineId, InvoiceId, TrackId, UnitPrice, Quantity)
                             VALUES (:InvoiceLineId, :InvoiceId, :TrackId, :UnitPrice, :Quantity)";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':InvoiceLineId', $InvoiceLineId);
         $stmt->bindParam(':InvoiceId', $InvoiceId);
         $stmt->bindParam(':TrackId', $TrackId);
         $stmt->bindParam(':UnitPrice', $UnitPrice);
-        $stmt->bindParam(':Quantity', 1);
+        $stmt->bindParam(':Quantity', $Quantity);
         $stmt->execute();
         $conn->commit();
     $insertDone = true;
@@ -54,6 +55,6 @@ function insertInvoiceLine($InvoiceLineId, $InvoiceId, $TrackId, $UnitPrice)
         die($e->getMessage());
     }
     $conn = null;
-    // return $insertDone;
+    return $insertDone;
 
 }
