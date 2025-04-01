@@ -95,6 +95,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
         setcookie('loginAttempts',$_COOKIE['loginAttempts'] + 1,time() - 9999,'/');
         session_start();
         $_SESSION['user'] = $user;
+        $_SESSION['userId'] = getUserId($_POST['email']);
         header('Location: ./inicio.php');
         exit();
       }

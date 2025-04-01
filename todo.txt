@@ -8,7 +8,7 @@ DOWNMUSIC:
   + eliminar items seleccionados del carrito
   - pasarela de pago
     + added dialog (form) for confirm the payment and send data to redsys
-    - prepare data to redsys
-    - send data to redsys
+    + prepare data to redsys
+    + send data to redsys
 
   - inserts a db

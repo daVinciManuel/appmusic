@@ -21,9 +21,10 @@
     dialog p span{
       font-weight: bold;
     }
-    dialog button:hover, dialog button:focus{
-      background-color: black;
+    dialog input[type='submit']:hover, dialog input[type='submit']:focus{
+      background-color: darkblue;
       color: #fafafa;
+      font-weight: bold;
     }
     </style>
   </head>
@@ -32,8 +33,11 @@
     <dialog <?php echo $dialog; ?>>
       <p>Total: <span><?php echo $total;?></span></p>
       <p>Desea realizar la compra?</p>
-      <form method='dialog'>
-      <button> Comprar</button>
+    <form action='https://sis-t.redsys.es:25443/sis/realizarPago' method='POST'>
+ <input type="hidden" name="Ds_SignatureVersion" value="<?php echo $version; ?>"/>
+ <input type="hidden" name="Ds_MerchantParameters" value="<?php echo $params; ?>"/>
+ <input type="hidden" name="Ds_Signature" value="<?php echo $signature; ?>"/>
+      <input type='submit' value='PAGAR'>
       </form>
     </dialog>
     <header>
