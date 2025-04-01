@@ -91,6 +91,7 @@ if(isset($_POST['download'])){
 					$signatureRecibida = $_POST["Ds_Signature"];
 					
 
+  $miObj = new RedsysAPI;
 					$decodec = $miObj->decodeMerchantParameters($datos);	
 					$kc = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'; //Clave recuperada de CANALES
 					$firma = $miObj->createMerchantSignatureNotif($kc,$datos);	
@@ -114,6 +115,7 @@ if(isset($_POST['download'])){
 			$signatureRecibida = $_GET["Ds_Signature"];
 				
 		
+	$miObj = new RedsysAPI;
 			$decodec = $miObj->decodeMerchantParameters($datos);
 			$kc = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'; //Clave recuperada de CANALES
 			$firma = $miObj->createMerchantSignatureNotif($kc,$datos);
