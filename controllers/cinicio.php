@@ -1,11 +1,16 @@
 <?php
 require_once "./controllers/login/checkLogin.php";
+$devview = true;
+if($devview){
+echo '<hr>';
+echo '<h5><b>Developer view:</b></h5>';
+echo '$_SESSION: ';
 var_dump($_SESSION);
 echo '</br>';
 echo '$ GET:';
 var_dump($_GET);
 echo '</br>';
-
+}
 // -------------------- PROCESAR RESPUESTA DE REDSYS ------------------------------------------------------------
 
   if (!empty( $_POST ) && isset($_POST['Ds_SignatureVersion']) && isset($_POST["Ds_MerchantParameters"]) && isset($_POST["Ds_Signature"]) ) {//URL DE RESP. ONLINE
@@ -50,7 +55,13 @@ echo '</br>';
         // echo "<h2>PAYMENT WENT OK</h2>";
 				echo "FIRMA OK";
         echo '</br>';
-        $insertDone = storeInvoice();
+      if($devview){
+        echo '$decodec: ';
+        $response = explode(',',$decodec);
+        var_dump($response);
+        echo '</br>';
+      }
+        // $insertDone = storeInvoice();
         echo $insertDone ? 'Pago guardado correctamente en la BD' : 'Error insertando datos a la base de datos';
 			} else {
 				echo "FIRMA KO";
@@ -70,17 +81,14 @@ function storeInvoice(){
   if(isset($_SESSION['carrito']) && count($_SESSION['carrito']) > 0){
     //
     // calculo el codigo de la siguiente factura
-    //
     include_once './models/queriesInvoice.php';
     $invoiceId = getInvoiceId();
     //
     // obtengo los datos del comprador necesarios para la factura (City,Country,State...)
-    //
     include_once './models/queriesCustomer.php';
     $user = getUserData($_SESSION['userId']);
     //
     // suma el precio de todos los items del carrito
-    //
     include_once './models/queriesTracks.php';
   $total = 0;
     foreach($_SESSION['carrito'] as $trackId){
@@ -107,5 +115,5 @@ function storeInvoice(){
 if($insertDone){
   unset($_SESSION['carrito']);
 }
-
+if($devview){ echo '<hr>'; }
 require_once "./view/vinicio.php";
