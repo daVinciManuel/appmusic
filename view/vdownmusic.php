@@ -6,26 +6,6 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/extra.css">
     <style>
-    dialog{
-      border: 2px solid red;
-      border-radius: 5px;
-      background-color: white;
-      z-index: 999999999999999999999;
-      padding: 50px;
-    }
-    dialog p{
-      margin: 0;
-      padding: 0;
-    }
-    /* precio */
-    dialog p span{
-      font-weight: bold;
-    }
-    dialog input[type='submit']:hover, dialog input[type='submit']:focus{
-      background-color: darkblue;
-      color: #fafafa;
-      font-weight: bold;
-    }
     </style>
   </head>
   <body class="bg-dark">
