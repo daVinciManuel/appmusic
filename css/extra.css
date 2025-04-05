@@ -24,3 +24,18 @@ dialog input[type='submit']:hover, dialog input[type='submit']:focus{
   color: #fafafa;
   font-weight: bold;
 }
+select{
+  max-width: 200px;
+  width: 200px;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-wrap: wrap;
+}
+option{
+  max-width: 200px;
+  width: 200px;
+  overflow-x: hidden;
+  text-wrap:wrap;
+  color: blue;
+}

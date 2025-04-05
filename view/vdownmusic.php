@@ -23,8 +23,10 @@
       <input type='submit' value='PAGAR'>
       </form>
     </dialog>
-    <header>
-      <a class="btn btn-danger" href="./controllers/login/logout.php">Logout</a>
+    <header class="container-fluid row">
+      <a class="btn btn-danger col-2 col-lg-1" href="./controllers/login/logout.php">Logout</a>
+      <span class="col-1"></span>
+      <a class="btn btn-info col-2 col-lg-1" href="./inicio.php">Inicio</a>
     </header>
     <main>
       <h1>Descargar Musica</h1>

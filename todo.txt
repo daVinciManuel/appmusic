@@ -11,3 +11,14 @@ DOWNMUSIC:
     + prepare data to redsys
     + send data to redsys
   + inserts a db
+  - Create db column for Redsys response code
+  - Save Redsys response code of every payment
+  - Obtain parameter DS_CardNumber from Redsys
+  - Create db column for Card Number of every payment
+  - Save card Number of every payment
+
+HISTFACTURAS:
+  - show Cliente Name
+  - request all cliente facturas
+  - show cliente facturas on table
+
