@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login - MUSICAL</title>
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
  </head>
       
 <body>
@@ -28,8 +28,8 @@
 		<input type="submit" name="submit" value="Login" class="btn btn-warning disabled"> </form>
 		
 	    </div>
-    </div>
-      <a href='./movregistro.php'>Registrarse</a>
-    </div>
+    <!-- </div> -->
+    <!--   <a href='./movregistro.php'>Registrarse</a> -->
+    <!-- </div> -->
 </body>
 </html>

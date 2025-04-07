@@ -96,7 +96,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
         session_start();
         $_SESSION['user'] = $user;
         $_SESSION['userId'] = getUserId($_POST['email']);
-        header('Location: ./inicio.php');
+        header('Location: ./controllers/cinicio.php');
         exit();
       }
     }

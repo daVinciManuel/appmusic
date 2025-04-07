@@ -1,7 +1,7 @@
 <?php
-include "./controllers/login/checkLogin.php";
-require "./db/connect.php";
-require "./models/queriesTracks.php";
+include "./login/checkLogin.php";
+require "../db/connect.php";
+require "../models/queriesTracks.php";
 echo "\$_SESSION[user]:";
 var_dump($_SESSION['user']);
 echo "<br>";
@@ -50,17 +50,17 @@ if(isset($_POST['download'])){
       $total += getTrackPrice($trackId);
     }
 
-	include_once './controllers/API_PHP/redsysHMAC256_API_PHP_7.0.0/apiRedsys.php';
-  include_once './models/queriesInvoice.php';
+	include_once './API_PHP/redsysHMAC256_API_PHP_7.0.0/apiRedsys.php';
+  include_once '../models/queriesInvoice.php';
 	$miObj = new RedsysAPI;
 		
 	$url="http://sis-t.redsys.es:25443/sis/realizarPago";
   // $urlOKKO="http://192.168.206.130/apps/appmusic/pruebaRedsys.php";
-  $urlOK="http://192.168.206.130/apps/appmusic/inicio.php";
-  $urlKO="http://192.168.206.130/apps/appmusic/paymentfailed.php";
+  $urlOK="http://localhost/apps/appmusic/controllers/cinicio.php";
+  $urlKO="http://localhost/apps/appmusic/controllers/cpaymentfailed.php";
   // numero de pedido
-  $id=sprintf("%012d", (string)getInvoiceId());
-  // $id = rand(10000,99999);
+  // $id=sprintf("%012d", (string)getInvoiceId());
+  $id = rand(10000,99999);
   // total a pagar
 	$amount=floatval($total)*100;
   $card = 'C';
@@ -99,4 +99,4 @@ if(isset($_SESSION['carrito'])){
 echo "\$_SESSION[carrito]:";
 var_dump($_SESSION['carrito']);
 echo "<br>";
-require "./view/vdownmusic.php";
+require "../view/vdownmusic.php";
