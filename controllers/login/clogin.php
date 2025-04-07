@@ -1,13 +1,13 @@
 <?php
 // si existe la cookie de usuario redirige a la pagina de inicio
 if (isset($_SESSION['user'])) {
-    header("Location: ./inicio.php");
+    header("Location: ./controllers/cinicio.php");
     exit();
 }
 // si esta baneado se redirige a una pagina vacia
-if(isset($_COOKIE['loginAttempts']) && $_COOKIE['loginAttempts'] >= 3 - 1){
-    header("Location: about:blank");
-}
+// if(isset($_COOKIE['loginAttempts']) && $_COOKIE['loginAttempts'] >= 3 - 1){
+//   $welcomePage = '#';
+// }
 function errorHandler($errno, $errstr, $errfile, $errline) {
     echo "<b> Error:</b> [$errno] $errstr<br>";
     // echo " Error on line $errline in $errfile<br>";
@@ -36,7 +36,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
       setcookie('loginAttempts',$attempts,time() + 60*5,'/');
       // ban por 5 minutos
       }else {
-        header("Location: about:blank");
+          header("Location: #");
       }
     }
   }else {
@@ -62,7 +62,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
           setcookie('loginAttempts',$attempts,time() + 60*5,'/');
           // ban por 5 minutos
         }else {
-        header("Location: about:blank");
+          header("Location: #");
         }
       }
     }else{
@@ -87,7 +87,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
             setcookie('loginAttempts',$attempts,time() + 60*5,'/');
             // ban por 5 minutos
           }else {
-          header("Location: about:blank");
+          header("Location: #");
           }
         }
       }else{

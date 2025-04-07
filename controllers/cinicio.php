@@ -53,19 +53,26 @@ echo '</br>';
 			$decodec = $miObj->decodeMerchantParameters($datos);
 			$kc = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'; //Clave recuperada de CANALES
 			$firma = $miObj->createMerchantSignatureNotif($kc,$datos);
-		
+      echo '$ respuesta decodec: ';
+			echo gettype($decodec);	
+        echo '</br>';
 			if ($firma === $signatureRecibida){
-        // echo "<h2>PAYMENT WENT OK</h2>";
 				echo "FIRMA OK";
         echo '</br>';
-      if($devview){
-        echo '$decodec: ';
-        $response = explode(',',$decodec);
-        var_dump($response);
-        echo '</br>';
-      }
-        $insertDone = storeInvoice();
-        echo $insertDone ? 'Pago guardado correctamente en la BD' : 'Error insertando datos a la base de datos';
+        // codigo de respuesta:
+        $responseCode = $miObj->getParameter("Ds_Response");
+        if($devview){
+          echo '$responseCode: ';
+          var_dump($responseCode);
+          echo '</br>';
+        }
+        // si codigo ok => guardar en DB
+        if($responseCode === "0000"){
+          $insertDone = storeInvoice();
+        }
+        if($devview){
+          echo $insertDone ? 'Pago guardado correctamente en la BD' : 'Error insertando datos a la base de datos';
+        }
 			} else {
 				echo "FIRMA KO";
 			}

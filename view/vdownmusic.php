@@ -50,6 +50,7 @@
         </div>
 		<input type="submit" name="addToCart" value="Agregar al carrito" class="btn btn-info disabled">
 		<input type="submit" name="download" value="Finalizar Compra" class="btn btn-info disabled">
+      <?php if(isset($carritoView)){ ?>
       <?php if(count($carritoView) > 0){ ?>
       <hr>
       <h3>Carrito</h3>
@@ -78,6 +79,7 @@
             </tr>
         </tbody>
       </table>
+      <?php } ?>
       <?php } ?>
       </form>
       </div>

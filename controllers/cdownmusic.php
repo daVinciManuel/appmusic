@@ -36,7 +36,6 @@ if(isset($_POST['removeFromCart'])){
   }
 }
 
-
 // ACCION COMPRAR ------------------------------------------------------------
 $total = 0;
 $dialog = '';
@@ -63,7 +62,6 @@ if(isset($_POST['download'])){
   $id = rand(10000,99999);
   // total a pagar
 	$amount=floatval($total)*100;
-  $card = 'C';
 	// Se Rellenan los campos
 	$miObj->setParameter("DS_MERCHANT_AMOUNT",$amount);
 	$miObj->setParameter("DS_MERCHANT_ORDER",$id);
@@ -74,7 +72,7 @@ if(isset($_POST['download'])){
 	$miObj->setParameter("DS_MERCHANT_MERCHANTURL",$url);
 	$miObj->setParameter("DS_MERCHANT_URLOK",$urlOK);
 	$miObj->setParameter("DS_MERCHANT_URLKO",$urlKO);
-	$miObj->setParameter("DS_MERCHANT_PAYMENTMETHOD",$card);
+	$miObj->setParameter("DS_MERCHANT_PAYMENTMETHOD",'C');
 
 	//Datos de configuración
 	$version="HMAC_SHA256_V1";
@@ -96,7 +94,9 @@ if(isset($_SESSION['carrito'])){
     $carritoView[] = getTrackInfo($trackId);
   }
 }
+if(isset($_SESSION['carrito'])){
 echo "\$_SESSION[carrito]:";
 var_dump($_SESSION['carrito']);
 echo "<br>";
-require "../view/vdownmusic.php";
+}
+require_once "../view/vdownmusic.php";
