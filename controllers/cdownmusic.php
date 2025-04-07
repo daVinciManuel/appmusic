@@ -46,20 +46,21 @@ if(isset($_POST['download'])){
     // $insertDone = storeInvoice();
     $dialog = 'open';
     foreach($_SESSION['carrito'] as $trackId){
+      // obtengo el monto TOTAL A PAGAR
       $total += getTrackPrice($trackId);
     }
 
-	include './controllers/API_PHP/redsysHMAC256_API_PHP_7.0.0/apiRedsys.php';
+	include_once './controllers/API_PHP/redsysHMAC256_API_PHP_7.0.0/apiRedsys.php';
   include_once './models/queriesInvoice.php';
 	$miObj = new RedsysAPI;
 		
 	$url="http://sis-t.redsys.es:25443/sis/realizarPago";
   // $urlOKKO="http://192.168.206.130/apps/appmusic/pruebaRedsys.php";
-  $urlOK="http://localhost/apps/appmusic/inicio.php";
-  $urlKO="http://localhost/apps/appmusic/paymentfailed.php";
+  $urlOK="http://192.168.206.130/apps/appmusic/inicio.php";
+  $urlKO="http://192.168.206.130/apps/appmusic/paymentfailed.php";
   // numero de pedido
-	// $id=sprintf("%012d", (string)getInvoiceId());
-  $id = rand(10000,99999);
+  $id=sprintf("%012d", (string)getInvoiceId());
+  // $id = rand(10000,99999);
   // total a pagar
 	$amount=floatval($total)*100;
   $card = 'C';

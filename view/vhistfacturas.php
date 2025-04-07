@@ -30,12 +30,19 @@
             </tr>
           </thead>
           <tbody>
+<?php if(isset($facturas)){ ?>
+
+  <?php $numFacturas = 0; ?>
+  <?php foreach($facturas as $f){ ?>
+              <?php $numFacturas +=1; ?>
             <tr>
-              <td>h</td>
-              <td>h</td>
-              <td>h</td>
-              <td>h</td>
+                <td><?php echo $numFacturas; ?></td>
+                <td><?php echo $f['InvoiceDate']; ?></td>
+                <td><?php echo $f['InvoiceId']; ?></td>
+                <td><?php echo $f['Total'] . ' €'; ?></td>
             </tr>
+  <?php } ?>
+<?php } ?>
           </tbody>
         </table>
         </div>

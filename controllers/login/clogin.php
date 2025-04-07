@@ -1,6 +1,6 @@
 <?php
 // si existe la cookie de usuario redirige a la pagina de inicio
-if (isset($_COOKIE['user'])) {
+if (isset($_SESSION['user'])) {
     header("Location: ./inicio.php");
     exit();
 }

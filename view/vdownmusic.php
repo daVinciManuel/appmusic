@@ -13,15 +13,17 @@
     <dialog <?php echo $dialog; ?>>
       <p>Total: <span><?php echo $total;?></span></p>
       <p>Desea realizar la compra?</p>
-    <form action='https://sis-t.redsys.es:25443/sis/realizarPago' method='POST'>
-        <?php if($dialog){ ?>
+ <form action='https://sis-t.redsys.es:25443/sis/realizarPago' method='POST'>
+ <?php if($dialog){ ?>
 
- <input type="hidden" name="Ds_SignatureVersion" value="<?php echo $version; ?>"/>
- <input type="hidden" name="Ds_MerchantParameters" value="<?php echo $params; ?>"/>
- <input type="hidden" name="Ds_Signature" value="<?php echo $signature; ?>"/>
-        <?php } ?>
-      <input type='submit' value='PAGAR'>
-      </form>
+<input type="hidden" name="Ds_SignatureVersion" value="<?php echo $version; ?>"/>
+<input type="hidden" name="Ds_MerchantParameters" value="<?php echo $params; ?>"/>
+<input type="hidden" name="Ds_Signature" value="<?php echo $signature; ?>"/> 
+<?php } ?> 
+<input type='submit' value='PAGAR'>
+<btn></btn>
+</form>
+      <form method="dialog"><input type="submit" value="CANCELAR"></form>
     </dialog>
     <header class="container-fluid row">
       <a class="btn btn-danger col-2 col-lg-1" href="./controllers/login/logout.php">Logout</a>

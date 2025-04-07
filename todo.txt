@@ -18,7 +18,7 @@ DOWNMUSIC:
   - Save card Number of every payment
 
 HISTFACTURAS:
-  - show Cliente Name
-  - request all cliente facturas
-  - show cliente facturas on table
+  + show Cliente Name
+  + request all cliente facturas
+  + show cliente facturas on table
 

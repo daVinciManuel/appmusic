@@ -4,12 +4,18 @@ $devview = true;
 if($devview){
 echo '<hr>';
 echo '<h5><b>Developer view:</b></h5>';
+echo 'current time:';
+var_dump(date('Y-m-d H:i:s'));
+echo '</br>';
 echo '$_SESSION: ';
 var_dump($_SESSION);
 echo '</br>';
-echo '$ GET:';
-var_dump($_GET);
-echo '</br>';
+// echo '$ GET:';
+// var_dump($_GET);
+// echo '</br>';
+// echo '$ POST:';
+// var_dump($_POST);
+// echo '</br>';
 }
 // -------------------- PROCESAR RESPUESTA DE REDSYS ------------------------------------------------------------
 
@@ -26,9 +32,6 @@ echo '</br>';
       $kc = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'; //Clave recuperada de CANALES
       $firma = $miObj->createMerchantSignatureNotif($kc,$datos);	
 
-      // echo PHP_VERSION."<br/>";
-      // echo $firma."<br/>";
-      // echo $signatureRecibida."<br/>";
       if ($firma === $signatureRecibida){
         echo "FIRMA OK";
         // echo "<h2>PAYMENT WENT OK</h2>";
@@ -46,7 +49,7 @@ echo '</br>';
 			$signatureRecibida = $_GET["Ds_Signature"];
 				
 		
-	$miObj = new RedsysAPI;
+      $miObj = new RedsysAPI;
 			$decodec = $miObj->decodeMerchantParameters($datos);
 			$kc = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'; //Clave recuperada de CANALES
 			$firma = $miObj->createMerchantSignatureNotif($kc,$datos);
@@ -61,7 +64,7 @@ echo '</br>';
         var_dump($response);
         echo '</br>';
       }
-        // $insertDone = storeInvoice();
+        $insertDone = storeInvoice();
         echo $insertDone ? 'Pago guardado correctamente en la BD' : 'Error insertando datos a la base de datos';
 			} else {
 				echo "FIRMA KO";
@@ -72,12 +75,13 @@ echo '</br>';
 		}
 	}
 
-// ------------- INSERTS DE FACTURAS ------------------------------------------
+// ------------- GUARDA FACTURA EN BD ------------------------------------------
 function storeInvoice(){
   include_once './db/connect.php';
   include_once './models/insertInvoice.php';
   $insertDone = false;
   // si existe el carrito y tiene items hace el insert a la base de datos
+  echo "$ SESSION['carrito']";
   if(isset($_SESSION['carrito']) && count($_SESSION['carrito']) > 0){
     //
     // calculo el codigo de la siguiente factura
@@ -102,7 +106,7 @@ function storeInvoice(){
       $insertDone = true;
     }
     foreach($_SESSION['carrito'] as $trackId){
-      if(!insertInvoiceLine(getInvoiceLineId(),$invoiceId,$trackId,getTrackPrice($trackId),1)){
+      if(!insertInvoiceLine(getInvoiceLineId(),$invoiceId,$trackId,getTrackPrice($trackId))){
         $insertDone = false;
       }
     }
