@@ -26,9 +26,9 @@
       <form method="dialog"><input type="submit" value="CANCELAR"></form>
     </dialog>
     <header class="container-fluid row">
-      <a class="btn btn-danger col-2 col-lg-1" href="../controllers/login/logout.php">Logout</a>
+      <a class="btn btn-danger col-2 col-lg-1" href="./login/logout.php">Logout</a>
       <span class="col-1"></span>
-      <a class="btn btn-info col-2 col-lg-1" href="../inicio.php">Inicio</a>
+      <a class="btn btn-info col-2 col-lg-1" href="./cinicio.php">Inicio</a>
     </header>
     <main>
       <h1>Descargar Musica</h1>

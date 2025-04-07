@@ -1,5 +1,5 @@
 <?php
 session_start();
 if(empty($_SESSION['user'])){
-  header('Location: ./clogin.php');
+  header('Location: ../index.php');
 }
