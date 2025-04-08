@@ -1,22 +1,23 @@
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PORTAL MUSICAL</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-  </head>
-  <body class="bg-dark">
-    <header>
-      <a class="btn btn-danger" href="./login/logout.php">Logout</a>
-    </header>
-    <main>
-<h1>WELCOME <?php echo $_SESSION['user'];?></h1>
-      <menu>
-        <li><a href="../controllers/cdownmusic.php">Descargar Musica</a></li>
-        <li><a href="../controllers/chistfacturas.php">Historial de Facturas</a></li>
-        <li><a href="#">Facturas entre dos fechas</a></li>
-        <li><a href="#">Ranking de canciones</a></li>
-      </menu>
-    </main>
-  </body>
-</html>
+<?php
+echo '<html>';
+echo '  <head>';
+echo '    <meta charset="UTF-8">';
+echo '    <meta name="viewport" content="width=device-width, initial-scale=1.0">';
+echo '    <title>PORTAL MUSICAL</title>';
+echo '    <link rel="stylesheet" href="../css/bootstrap.min.css">';
+echo '  </head>';
+echo '  <body class="bg-dark">';
+echo '    <header>';
+echo '      <a class="btn btn-danger" href="./login/logout.php">Logout</a>';
+echo '    </header>';
+echo '    <main>';
+echo '<h1>WELCOME '. $_SESSION['user'].'</h1>';
+echo '      <menu>';
+echo '        <li><a href="../controllers/cdownmusic.php">Descargar Musica</a></li>';
+echo '        <li><a href="../controllers/chistfacturas.php">Historial de Facturas</a></li>';
+echo '        <li><a href="#">Facturas entre dos fechas</a></li>';
+echo '        <li><a href="#">Ranking de canciones</a></li>';
+echo '      </menu>';
+echo '    </main>';
+echo '  </body>';
+echo '</html>';
