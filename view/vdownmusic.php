@@ -62,6 +62,7 @@ echo '      <table>';
 echo '        <thead>';
 echo '          <tr>';
 echo '            <th>Cancion</th>';
+echo '            <th>Cantidad</th>';
 echo '            <th>Precio</th>';
 echo '            <th></th>';
 echo '          </tr>';
@@ -72,6 +73,7 @@ echo '        <tbody>';
 
 echo '          <tr>';
 echo '            <td>'. $c['Name'].'</td>';
+echo '            <td> &nbsp;&nbsp;&nbsp;'. $_SESSION['carrito'][$c['TrackId']].'</td>';
 echo '            <td>'. $c['UnitPrice'] . '</td>';
 // CASILLA PARA SELECCIONAR ITEM PARA ELIMINAR
 echo '            <td><input type="checkbox" name="tracksToRemove[]" value="'. $c['TrackId'].'"></td>';

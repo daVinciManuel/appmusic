@@ -16,37 +16,47 @@ if(isset($_POST['addToCart']) && isset($_POST['track'])){
     $_SESSION['carrito'] = array();
   } else {
     // COMPRUEBA SI CANCION SELECCIONADA ESTA EN EL CARRITO
-    if(in_array($_POST['track'],$_SESSION['carrito'])){
-      $trackIsAlreadySelected = true;
-    }
+    // if(in_array($_POST['track'],$_SESSION['carrito'])){
+    //   $trackIsAlreadySelected = true;
+    // }
   }
+    // COMPRUEBA SI CANCION SELECCIONADA ESTA EN EL CARRITO
+  $trackIsAlreadySelected = (array_key_exists($_POST['track'],$_SESSION['carrito'])) ? true : false ;
   // AGREGA ID DE LA CANCION AL CARRITO si no esta agregado ya
-  if(!$trackIsAlreadySelected){
-			$_SESSION['carrito'][] = $_POST['track'];
-	}
+  if($trackIsAlreadySelected){
+      $_SESSION['carrito'][$_POST['track']] = 1 +  intval($_SESSION['carrito'][$_POST['track']]);
+  }else{
+  // inserta un nuevo producto con su cantidad al carrito
+      $pistasPedidas = array_keys($_SESSION['carrito']);
+      array_push($pistasPedidas,$_POST['track']);
+      $cantidad = array_values($_SESSION['carrito']);
+      array_push($cantidad,1);
+      $updateCarrito = array_combine($pistasPedidas,$cantidad);
+      $_SESSION['carrito'] = $updateCarrito;
+  }
 }
 // ------------------------------------------------ ACCION ELIMINAR DEL CARRITO ------------------------------------------------
+// ////////////// FALTA ACTUALIZAR ////////////////
 if(isset($_POST['removeFromCart'])){
   foreach($_POST['tracksToRemove'] as $id){
-    $index = array_search($id,$_SESSION['carrito']);
-    if($index > -1){
-      unset($_SESSION['carrito'][$index]);
-      $_SESSION['carrito'] = array_values($_SESSION['carrito']);
-    }
+      unset($_SESSION['carrito'][$id]);
   }
 }
 
 // ACCION COMPRAR ------------------------------------------------------------
 $total = 0;
 $dialog = '';
-$insertDone = false;
 if(isset($_POST['download'])){
 	if (count($_SESSION['carrito']) > 0) {
-    // $insertDone = storeInvoice();
+    // muestro el cuadro de dialogo
     $dialog = 'open';
-    foreach($_SESSION['carrito'] as $trackId){
+    $pistas = array_keys($_SESSION['carrito']);
+    $cantidades = array_values($_SESSION['carrito']);
       // obtengo el monto TOTAL A PAGAR
-      $total += getTrackPrice($trackId);
+    foreach($pistas as $n => $trackId){
+      $cant = $cantidades[$n];
+      $monto = $cant * getTrackPrice($trackId);
+      $total += $monto;   
     }
 
 	include_once './API_PHP/redsysHMAC256_API_PHP_7.0.0/apiRedsys.php';
@@ -90,7 +100,8 @@ if(isset($_POST['download'])){
 if(isset($_SESSION['carrito'])){
   // array con los nombres y precios de las canciones del carrito
   $carritoView = array();
-  foreach($_SESSION['carrito'] as $trackId){
+  $pistas = array_keys($_SESSION['carrito']);
+  foreach($pistas as $trackId){
     $carritoView[] = getTrackInfo($trackId);
   }
 }

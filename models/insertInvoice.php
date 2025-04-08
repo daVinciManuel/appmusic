@@ -32,12 +32,12 @@ function insertInvoice($InvoiceId, $CustomerId, $InvoiceDate, $BillingAddress, $
 
 
 
-function insertInvoiceLine($InvoiceLineId, $InvoiceId, $TrackId, $UnitPrice)
+function insertInvoiceLine($InvoiceLineId, $InvoiceId, $TrackId, $UnitPrice,$Quantity)
 {
     $insertDone = false;
     $conn = connect();
     try {
-    $Quantity = 1;
+    // $Quantity = 1;
         $conn->beginTransaction();
         $query = "INSERT INTO InvoiceLine(InvoiceLineId, InvoiceId, TrackId, UnitPrice, Quantity)
                             VALUES (:InvoiceLineId, :InvoiceId, :TrackId, :UnitPrice, :Quantity)";

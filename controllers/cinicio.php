@@ -102,8 +102,13 @@ function storeInvoice(){
     // suma el precio de todos los items del carrito
     include_once '../models/queriesTracks.php';
   $total = 0;
-    foreach($_SESSION['carrito'] as $trackId){
-      $total = $total + getTrackPrice($trackId);
+    $pistas = array_keys($_SESSION['carrito']);
+    $cantidades = array_values($_SESSION['carrito']);
+      // obtengo el monto TOTAL A PAGAR
+    foreach($pistas as $n => $trackId){
+      $cant = $cantidades[$n];
+      $monto = $cant * getTrackPrice($trackId);
+      $total += $monto;   
     }
     // redondeo el precio para evitar un fallo del almacenamiento en memoria de los FLOAT en PHP que son inexactos
     $total = round($total,2);
@@ -112,8 +117,8 @@ function storeInvoice(){
     if(insertInvoice($invoiceId,$_SESSION['userId'],date('Y-m-d H:i:s'),$user['Address'],$user['City'],$user['State'],$user['Country'],$user['PostalCode'],$total)){
       $insertDone = true;
     }
-    foreach($_SESSION['carrito'] as $trackId){
-      if(!insertInvoiceLine(getInvoiceLineId(),$invoiceId,$trackId,getTrackPrice($trackId))){
+    foreach(array_keys($_SESSION['carrito']) as $trackId){
+      if(!insertInvoiceLine(getInvoiceLineId(),$invoiceId,$trackId,getTrackPrice($trackId),$_SESSION['carrito'][$trackId])){
         $insertDone = false;
       }
     }
@@ -123,7 +128,7 @@ function storeInvoice(){
 }
 
 // borro el carrito si se ha guardado la compra en la BD 
-if($insertDone){
+if(isset($insertDone)){
   unset($_SESSION['carrito']);
 }
 if($devview){ echo '<hr>'; }
